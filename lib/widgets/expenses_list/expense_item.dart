@@ -17,10 +17,10 @@ class ExpenseItem extends StatelessWidget {
               expense.title,
               textAlign: TextAlign.right, //why this feature isnt working
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 10),
             Row(
               children: [
-                Text('\$${expense.amount.toStringAsFixed(2)}'),
+                Text('₹${expense.amount.toStringAsFixed(2)}'),
                 Spacer(),
                 Row(
                   children: [
