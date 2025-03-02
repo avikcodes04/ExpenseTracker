@@ -13,21 +13,22 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
-    Expense(
-      title: "Flutter course",
-      category: Category.work,
-      amount: 19.99,
-      date: DateTime.now(),
-    ),
-    Expense(
-      title: "movie",
-      category: Category.leisure,
-      amount: 2009,
-      date: DateTime.now(),
-    ),
+    // Expense(
+    //   title: "Flutter course",
+    //   category: Category.work,
+    //   amount: 19.99,
+    //   date: DateTime.now(),
+    // ),
+    // Expense(
+    //   title: "movie",
+    //   category: Category.leisure,
+    //   amount: 2009,
+    //   date: DateTime.now(),
+    // ),
   ];
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
@@ -64,6 +65,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text("No expense found.Start adding some!"),
     );
@@ -81,12 +84,20 @@ class _ExpensesState extends State<Expenses> {
           IconButton(onPressed: _openAddExpenseOverlay, icon: Icon(Icons.add)),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(child: mainContent),
-        ],
-      ), //conditional widget
+      body:
+          width < 600
+              ? Column(
+                children: [
+                  Chart(expenses: _registeredExpenses),
+                  Expanded(child: mainContent),
+                ],
+              )
+              : Row(
+                children: [
+                  Expanded(child: Chart(expenses: _registeredExpenses)),
+                  Expanded(child: mainContent),
+                ],
+              ), //conditional widget
     );
   }
 }
